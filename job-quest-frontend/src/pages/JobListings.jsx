@@ -12,8 +12,7 @@ const JobListings = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
 
-  const [isJobApplicationModalOpen, setIsJobApplicationModalOpen] =
-    useState(false);
+  const [isJobApplicationModalOpen, setIsJobApplicationModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
   const [confirmationMessage, setConfirmationMessage] = useState("");
