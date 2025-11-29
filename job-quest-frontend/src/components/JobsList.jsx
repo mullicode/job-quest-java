@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axiosConfig";
 
 const JobsList = ({
   actionLoading,
@@ -14,12 +15,25 @@ const JobsList = ({
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isRecruiter = useSelector((state) => state.auth.isRecruiter);
   const userData = useSelector((state) => state.auth.userData);
+  
+  const [applications, setApplications] = useState([]);
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/");
     }
   }, [isAuthenticated, navigate]);
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+      if (!isRecruiter) {
+        const applicationsResponse = await api.get("/api/v1/applications");
+        setApplications(applicationsResponse.data);
+      }
+    };
+
+    fetchApplications();
+  }, [isRecruiter]);
 
   const handleApplyClick = (job) => {
     setSelectedJob(job);
@@ -109,15 +123,24 @@ const JobsList = ({
               </div>
             ) : (
               <div>
-                <button
-                  onClick={() => handleApplyClick(job)}
-                  disabled={isRecruiter}
-                  className={`py-4 px-8 bg-green-600 hover:opacity-70 rounded-lg text-white text-lg font-semibold transition-opacity ${
-                    isRecruiter && "opacity-30 hover:opacity-40"
-                  }`}
-                >
-                  Apply
-                </button>
+                {applications.some((application) => application.jobId === job.id) ? (
+                  <button
+                    disabled
+                    className="py-4 px-8 bg-gray-600 rounded-lg text-white text-lg font-semibold"
+                  >
+                    Applied
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleApplyClick(job)}
+                    disabled={isRecruiter}
+                    className={`py-4 px-8 bg-green-600 hover:opacity-70 rounded-lg text-white text-lg font-semibold transition-opacity ${
+                      isRecruiter && "opacity-30 hover:opacity-40"
+                    }`}
+                  >
+                    Apply
+                  </button>
+                )}
               </div>
             )}
           </div>

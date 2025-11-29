@@ -21,11 +21,12 @@ const JobApplication = ({ isOpen, onClose, job, applyForJob }) => {
   useEffect(() => {
     setApplicationForm({
       ...applicationForm,
+      jobId: job?.id,
       name: userData?.name,
       email: userData?.email,
       skills: userData?.skills?.map((item) => ({ value: item, label: item })),
     });
-  }, [userData]);
+  }, [userData, job]);
 
   const [isLoading, setIsLoading] = useState(false);
 
