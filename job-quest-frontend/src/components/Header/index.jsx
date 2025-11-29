@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import Logo from "../Logo";
@@ -8,6 +8,7 @@ import { logout as storeLogout } from "../../store/authSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -52,7 +53,7 @@ const Header = () => {
             <li>
               <button
                 onClick={() => navigate("/")}
-                className="inline-block px-4 py-2 duration-200 hover:bg-slate-900 hover:text-blue-400 rounded-2xl"
+                className={`inline-block px-4 py-2 duration-200 hover:bg-slate-900 hover:text-blue-400 rounded-2xl ${pathname === "/" ? "text-blue-400" : ""}`}
               >
                 Home
               </button>
@@ -60,7 +61,7 @@ const Header = () => {
             <li>
               <button
                 onClick={() => navigate("/jobs")}
-                className="inline-block px-4 py-2 duration-200 hover:bg-slate-900 hover:text-blue-400 rounded-2xl"
+                className={`inline-block px-4 py-2 duration-200 hover:bg-slate-900 hover:text-blue-400 rounded-2xl ${pathname === "/jobs" ? "text-blue-400" : ""}`}
               >
                 Job Listings
               </button>
