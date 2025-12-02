@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface JobApplicationRepository extends MongoRepository<JobApplication, ObjectId> {
     Optional<JobApplication> findByJobId(ObjectId jobId);
+    List<JobApplication> findByEmail(String email);
 }

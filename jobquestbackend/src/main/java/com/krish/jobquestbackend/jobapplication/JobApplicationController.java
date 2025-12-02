@@ -19,8 +19,8 @@ public class JobApplicationController {
     private JobApplicationService jobApplicationService;
 
     @GetMapping
-    public ResponseEntity<List<JobApplication>> getAllJobApplications() {
-        return new ResponseEntity<List<JobApplication>>(jobApplicationService.allJobApplications(), HttpStatus.OK);
+    public ResponseEntity<List<JobApplication>> getAllJobApplications(@RequestParam String email) {
+        return new ResponseEntity<List<JobApplication>>(jobApplicationService.allJobApplications(email), HttpStatus.OK);
     }
 
     @GetMapping("/{jobId}")
