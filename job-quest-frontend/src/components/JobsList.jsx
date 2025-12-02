@@ -27,7 +27,7 @@ const JobsList = ({
   useEffect(() => {
     const fetchApplications = async () => {
       if (!isRecruiter) {
-        const applicationsResponse = await api.get("/api/v1/applications");
+        const applicationsResponse = await api.get("/api/v1/applications", { params: { email: userData.email } });
         setApplications(applicationsResponse.data);
       }
     };
@@ -123,7 +123,7 @@ const JobsList = ({
               </div>
             ) : (
               <div>
-                {applications.some((application) => application.jobId === job.id) ? (
+                {applications.some((application) => application.jobIdString === job.id) ? (
                   <button
                     disabled
                     className="py-4 px-8 bg-gray-600 rounded-lg text-white text-lg font-semibold"
